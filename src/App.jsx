@@ -1,10 +1,32 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
+
+const submitForm = async formData => {
+  console.log(formData)
+  const call = await fetch('https://strata-crm-rho.vercel.app/api/contacts', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${process.env.REACT_APP_CRM_API}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      first_name: formData.name.split(' ')[0],
+      last_name: formData.name.split(' ')?.[1] ?? '',
+      email: formData.name,
+      job_title: formData.role,
+      // functional_role: formData.,
+      source: 'Website',
+      notes: formData.msg
+    })
+  })
+  console.log(call)
+  return true
+}
 
 /* ═══ DESIGN TOKENS ═══ */
 const T="#0D7377",TL="#14A3A8",N="#0F1B2D",BG="#080E18";
 // Unified dark palette — no more jarring white sections
 const S1=N, S2="#111D30", S3="#0C1524"; // subtle alternating dark tones
-const useSc=()=>useCallback(id=>document.getElementById(id)?.scrollIntoView({behavior:"smooth"}),[]);
+// const useSc=()=>useCallback(id=>document.getElementById(id)?.scrollIntoView({behavior:"smooth"}),[]);
 function useFI(){const r=useRef(null);const[v,sV]=useState(false);useEffect(()=>{const o=new IntersectionObserver(([e])=>{if(e.isIntersecting)sV(true)},{threshold:0.06});if(r.current)o.observe(r.current);return()=>o.disconnect()},[]);return[r,v]}
 function F({children,d=0}){const[r,v]=useFI();return<div ref={r} style={{opacity:v?1:0,transform:v?"translateY(0)":"translateY(28px)",transition:`opacity 0.8s ease ${d}s, transform 0.8s ease ${d}s`}}>{children}</div>}
 
@@ -30,8 +52,7 @@ function Ic({d}){
   return icons[d]||null;
 }
 
-const CSS=`
-*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+const CSS=`*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
 @media(min-width:769px){.mo{display:none!important}}
 @media(max-width:768px){.dk{display:none!important}.mo{display:flex!important}}
 @media(max-width:640px){.g2{grid-template-columns:1fr!important}.g3{grid-template-columns:1fr!important}.g4{grid-template-columns:1fr 1fr!important}.hh{font-size:32px!important}.sr{gap:20px!important}.pg{grid-template-columns:1fr!important}}
@@ -39,8 +60,7 @@ const CSS=`
 input[type="text"],input[type="email"],textarea,select{font-family:'Roboto',sans-serif;font-size:14px;padding:11px 14px;border:1px solid rgba(255,255,255,0.12);border-radius:6px;background:rgba(255,255,255,0.04);color:#fff;width:100%;transition:border-color 0.2s}
 input:focus,textarea:focus,select:focus{outline:none;border-color:${TL}}
 input::placeholder,textarea::placeholder{color:rgba(255,255,255,0.3)}
-select option{background:${N};color:#fff}
-`;
+select option{background:${N};color:#fff}`;
 
 const os="'Oswald',sans-serif",rb="'Roboto',sans-serif";
 const lbl=(c=TL)=>({fontFamily:rb,fontSize:11,color:c,fontWeight:500,letterSpacing:"0.14em",textTransform:"uppercase",marginBottom:16});
@@ -437,7 +457,15 @@ function PlatformPage({setPage}){
               </div>
             </div>
           </F></div>
-          <F d={0.25}><div style={{textAlign:"center",marginTop:36}}><button onClick={()=>setPage("start")} style={btn()} onMouseEnter={hov} onMouseLeave={unhov}>Get started free <Ic d="arrow"/></button></div></F>
+          <F d={0.25}>
+            <div 
+              style={{textAlign:"center",marginTop:36}}
+            >
+                <button 
+                  onClick={()=>setPage('start')} style={btn()} 
+                  onMouseEnter={hov} 
+                  onMouseLeave={unhov}
+                >Get started free <Ic d="arrow"/></button></div></F>
         </div>
       </div>
     </section>
@@ -630,12 +658,25 @@ function StartPage(){
             <p style={{fontFamily:rb,fontSize:15,color:"rgba(255,255,255,0.7)",lineHeight:1.7}}>We will be in touch within 48 hours to get you set up.</p>
           </div></F>
         ):(
-          <F d={0.1}><div style={{...cd,padding:"clamp(24px,3vw,32px)"}}>
+          <F d={0.1}>
+          <div style={{...cd,padding:"clamp(24px,3vw,32px)"}}>
             <div className="g2" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
-              <div><label style={{fontFamily:rb,fontSize:11,fontWeight:500,color:"rgba(255,255,255,0.6)",display:"block",marginBottom:6}}>Name *</label><input type="text" placeholder="Your name" value={f.name} onChange={e=>u("name",e.target.value)}/></div>
-              <div><label style={{fontFamily:rb,fontSize:11,fontWeight:500,color:"rgba(255,255,255,0.6)",display:"block",marginBottom:6}}>Email *</label><input type="email" placeholder="you@organisation.org.uk" value={f.email} onChange={e=>u("email",e.target.value)}/></div>
-              <div><label style={{fontFamily:rb,fontSize:11,fontWeight:500,color:"rgba(255,255,255,0.6)",display:"block",marginBottom:6}}>Organisation *</label><input type="text" placeholder="Your organisation" value={f.org} onChange={e=>u("org",e.target.value)}/></div>
-              <div><label style={{fontFamily:rb,fontSize:11,fontWeight:500,color:"rgba(255,255,255,0.6)",display:"block",marginBottom:6}}>Role</label><input type="text" placeholder="e.g. Director of Finance" value={f.role} onChange={e=>u("role",e.target.value)}/></div>
+              <div>
+                <label style={{fontFamily:rb,fontSize:11,fontWeight:500,color:"rgba(255,255,255,0.6)",display:"block",marginBottom:6}}>Name *</label>
+                <input type="text" placeholder="Your name" value={f.name} onChange={e=>u("name",e.target.value)}/>
+              </div>
+              <div>
+                <label style={{fontFamily:rb,fontSize:11,fontWeight:500,color:"rgba(255,255,255,0.6)",display:"block",marginBottom:6}}>Email *</label>
+                <input type="email" placeholder="you@organisation.org.uk" value={f.email} onChange={e=>u("email",e.target.value)}/>
+              </div>
+              <div>
+                <label style={{fontFamily:rb,fontSize:11,fontWeight:500,color:"rgba(255,255,255,0.6)",display:"block",marginBottom:6}}>Organisation *</label>
+                <input type="text" placeholder="Your organisation" value={f.org} onChange={e=>u("org",e.target.value)}/>
+              </div>
+              <div>
+                <label style={{fontFamily:rb,fontSize:11,fontWeight:500,color:"rgba(255,255,255,0.6)",display:"block",marginBottom:6}}>Role</label>
+                <input type="text" placeholder="e.g. Director of Finance" value={f.role} onChange={e=>u("role",e.target.value)} />
+              </div>
             </div>
             <div style={{marginTop:12}}><label style={{fontFamily:rb,fontSize:11,fontWeight:500,color:"rgba(255,255,255,0.6)",display:"block",marginBottom:6}}>Which product interests you most?</label>
               <select value={f.interest} onChange={e=>u("interest",e.target.value)}><option value="">Select</option><option value="contracts">Strata | Contracts</option><option value="requests">Strata | Requests</option><option value="charges">Strata | Charges</option><option value="rents">Strata | Rents</option><option value="all">Full platform</option></select>
@@ -643,7 +684,13 @@ function StartPage(){
             <div style={{marginTop:12}}><label style={{fontFamily:rb,fontSize:11,fontWeight:500,color:"rgba(255,255,255,0.6)",display:"block",marginBottom:6}}>What is your biggest compliance challenge?</label>
               <textarea rows={3} placeholder="Optional, but helps us tailor your setup" value={f.msg} onChange={e=>u("msg",e.target.value)} style={{resize:"vertical"}}/>
             </div>
-            <button onClick={()=>ok&&setDone(true)} disabled={!ok} style={{fontFamily:rb,fontSize:15,fontWeight:500,background:T,color:"#fff",border:"none",borderRadius:6,padding:"14px 32px",cursor:ok?"pointer":"default",marginTop:18,width:"100%",display:"flex",alignItems:"center",justifyContent:"center",gap:8,boxShadow:`0 0 40px ${T}25`,opacity:ok?1:0.4}} onMouseEnter={e=>ok&&(e.currentTarget.style.transform="translateY(-2px)")} onMouseLeave={e=>e.currentTarget.style.transform="none"}>Get started free <Ic d="arrow"/></button>
+            <button 
+              onClick={()=>ok&&submitForm(f)&&setDone(true)} 
+              disabled={!ok} 
+              style={{fontFamily:rb,fontSize:15,fontWeight:500,background:T,color:"#fff",border:"none",borderRadius:6,padding:"14px 32px",cursor:ok?"pointer":"default",marginTop:18,width:"100%",display:"flex",alignItems:"center",justifyContent:"center",gap:8,boxShadow:`0 0 40px ${T}25`,opacity:ok?1:0.4}} 
+              onMouseEnter={e=>ok&&(e.currentTarget.style.transform="translateY(-2px)")} 
+              onMouseLeave={e=>e.currentTarget.style.transform="none"}
+            >Get started free <Ic d="arrow"/></button>
           </div></F>
         )}
         <F d={0.25}><div style={{marginTop:44,display:"flex",justifyContent:"center",gap:40,flexWrap:"wrap"}}>
@@ -882,7 +929,8 @@ function ALBPage({setPage}){
 
 /* ═══ APP ═══ */
 export default function StrataAI(){
-  const go=useSc();const[page,setPage]=useState("home");
+  // const go = useSc();
+  const[page,setPage] = useState("home");
   useEffect(()=>{window.scrollTo({top:0,behavior:"smooth"})},[page]);
   return(
     <div style={{background:S1,minHeight:"100vh",overflowX:"hidden"}}>
