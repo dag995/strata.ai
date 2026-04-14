@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
 const submitForm = async formData => {
-  console.log(formData)
+  // { first:"",last:"",email:"",org:"",role:"",interest:"",msg:"" }
   const call = await fetch('https://strata-crm-rho.vercel.app/api/contacts', {
     method: 'POST',
     headers: {
@@ -11,7 +11,7 @@ const submitForm = async formData => {
     body: JSON.stringify({
       first_name: formData.first,
       last_name: formData.last,
-      email: formData.name,
+      email: formData.email,
       job_title: formData.role,
       organisation_id: formData.org,
       source: 'Website',
@@ -640,7 +640,8 @@ function AboutPage({setPage}){
 
 /* ═══ GET STARTED ═══ */
 function StartPage(){
-  const[done,setDone]=useState(false);const[f,sF]=useState({name:"",email:"",org:"",role:"",interest:"",msg:""});
+  const[done,setDone]=useState(false);
+  const[f,sF]=useState({ first:"",last:"",email:"",org:"",role:"",interest:"",msg:"" });
   const u=(k,v)=>sF(p=>({...p,[k]:v}));const ok=f.name&&f.email&&f.org;
   return(
     <section style={{background:`linear-gradient(170deg,${BG} 0%,${S1} 100%)`,minHeight:"100vh",paddingTop:80,position:"relative",overflow:"hidden"}}>
