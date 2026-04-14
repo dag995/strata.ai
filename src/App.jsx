@@ -9,11 +9,11 @@ const submitForm = async formData => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      first_name: formData.name.split(' ')[0],
-      last_name: formData.name.split(' ')?.[1] ?? '',
+      first_name: formData.first,
+      last_name: formData.last,
       email: formData.name,
       job_title: formData.role,
-      // functional_role: formData.,
+      organisation_id: formData.org,
       source: 'Website',
       notes: formData.msg
     })
@@ -662,8 +662,12 @@ function StartPage(){
           <div style={{...cd,padding:"clamp(24px,3vw,32px)"}}>
             <div className="g2" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
               <div>
-                <label style={{fontFamily:rb,fontSize:11,fontWeight:500,color:"rgba(255,255,255,0.6)",display:"block",marginBottom:6}}>Name *</label>
-                <input type="text" placeholder="Your name" value={f.name} onChange={e=>u("name",e.target.value)}/>
+                <label style={{fontFamily:rb,fontSize:11,fontWeight:500,color:"rgba(255,255,255,0.6)",display:"block",marginBottom:6}}>First Name *</label>
+                <input type="text" placeholder="First name" value={f.name} onChange={e=>u("first",e.target.value)}/>
+              </div>
+              <div>
+                <label style={{fontFamily:rb,fontSize:11,fontWeight:500,color:"rgba(255,255,255,0.6)",display:"block",marginBottom:6}}>Surname *</label>
+                <input type="text" placeholder="Surname" value={f.name} onChange={e=>u("last",e.target.value)}/>
               </div>
               <div>
                 <label style={{fontFamily:rb,fontSize:11,fontWeight:500,color:"rgba(255,255,255,0.6)",display:"block",marginBottom:6}}>Email *</label>
@@ -673,14 +677,14 @@ function StartPage(){
                 <label style={{fontFamily:rb,fontSize:11,fontWeight:500,color:"rgba(255,255,255,0.6)",display:"block",marginBottom:6}}>Organisation *</label>
                 <input type="text" placeholder="Your organisation" value={f.org} onChange={e=>u("org",e.target.value)}/>
               </div>
-              <div>
-                <label style={{fontFamily:rb,fontSize:11,fontWeight:500,color:"rgba(255,255,255,0.6)",display:"block",marginBottom:6}}>Role</label>
-                <input type="text" placeholder="e.g. Director of Finance" value={f.role} onChange={e=>u("role",e.target.value)} />
-              </div>
             </div>
-            <div style={{marginTop:12}}><label style={{fontFamily:rb,fontSize:11,fontWeight:500,color:"rgba(255,255,255,0.6)",display:"block",marginBottom:6}}>Which product interests you most?</label>
+            <div style={{marginTop:12}}>
+              <label style={{fontFamily:rb,fontSize:11,fontWeight:500,color:"rgba(255,255,255,0.6)",display:"block",marginBottom:6}}>Role</label>
+              <input type="text" placeholder="e.g. Director of Finance" value={f.role} onChange={e=>u("role",e.target.value)} />
+            </div>
+            {/* <div style={{marginTop:12}}><label style={{fontFamily:rb,fontSize:11,fontWeight:500,color:"rgba(255,255,255,0.6)",display:"block",marginBottom:6}}>Which product interests you most?</label>
               <select value={f.interest} onChange={e=>u("interest",e.target.value)}><option value="">Select</option><option value="contracts">Strata | Contracts</option><option value="requests">Strata | Requests</option><option value="charges">Strata | Charges</option><option value="rents">Strata | Rents</option><option value="all">Full platform</option></select>
-            </div>
+            </div> */}
             <div style={{marginTop:12}}><label style={{fontFamily:rb,fontSize:11,fontWeight:500,color:"rgba(255,255,255,0.6)",display:"block",marginBottom:6}}>What is your biggest compliance challenge?</label>
               <textarea rows={3} placeholder="Optional, but helps us tailor your setup" value={f.msg} onChange={e=>u("msg",e.target.value)} style={{resize:"vertical"}}/>
             </div>
