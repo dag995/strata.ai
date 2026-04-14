@@ -642,7 +642,7 @@ function AboutPage({setPage}){
 function StartPage(){
   const[done,setDone]=useState(false);
   const[f,sF]=useState({ first:"",last:"",email:"",org:"",role:"",interest:"",msg:"" });
-  const u=(k,v)=>sF(p=>({...p,[k]:v}));const ok=f.name&&f.email&&f.org;
+  const u=(k,v)=>sF(p=>({...p,[k]:v}));const ok=f.first&&f.last&&f.email&&f.org;
   return(
     <section style={{background:`linear-gradient(170deg,${BG} 0%,${S1} 100%)`,minHeight:"100vh",paddingTop:80,position:"relative",overflow:"hidden"}}>
       <div style={{position:"absolute",top:"10%",right:"-5%",width:400,height:400,background:`radial-gradient(circle,${T}08 0%,transparent 60%)`,borderRadius:"50%",filter:"blur(60px)"}}/>
