@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 
 const submitForm = async formData => {
   // { first:"",last:"",email:"",org:"",role:"",interest:"",msg:"" }
-  const call = await fetch('https://strata-crm-rho.vercel.app/api/contacts', {
+  await fetch('https://strata-crm-rho.vercel.app/api/contacts', {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${process.env.REACT_APP_CRM_API}`,
@@ -12,13 +12,14 @@ const submitForm = async formData => {
       first_name: formData.first,
       last_name: formData.last,
       email: formData.email,
-      job_title: formData.role,
-      organisation_id: formData.org,
+      job_title: `${formData.role} @ ${formData.org}`,
+      // organisation_id: formData.org,
       source: 'Website',
       notes: formData.msg
     })
   })
-  console.log(call)
+  .then(response => response.json())
+  .then(response => console.log(response))
   return true
 }
 
