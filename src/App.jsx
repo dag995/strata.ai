@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from "react";
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+
 
 const submitForm = async formData => {
   // { first:"",last:"",email:"",org:"",role:"",interest:"",msg:"" }
@@ -187,7 +189,7 @@ const haProducts=[
 ];
 
 /* ═══ NAV ═══ */
-function Nav({page,setPage}){
+function Nav({setPage}){
   const[sc,setSc]=useState(false);const[op,setOp]=useState(false);
   useEffect(()=>{const h=()=>setSc(window.scrollY>40);window.addEventListener("scroll",h);return()=>window.removeEventListener("scroll",h)},[]);
   const links=[
@@ -936,25 +938,33 @@ function ALBPage({setPage}){
 /* ═══ APP ═══ */
 export default function StrataAI(){
   // const go = useSc();
-  const[page,setPage] = useState("home");
-  useEffect(()=>{window.scrollTo({top:0,behavior:"smooth"})},[page]);
+  
+  // const[page,setPage] = useState("home");
+  const setPage = useNavigate()
+  
+  // useEffect(()=>{window.scrollTo({top:0,behavior:"smooth"})},[page]);
+  
   return(
     <div style={{background:S1,minHeight:"100vh",overflowX:"hidden"}}>
       <style>{CSS}</style>
       <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
-      <Nav page={page} setPage={setPage}/>
-      {page==="home"&&<Home setPage={setPage}/>}
-      {page==="platform"&&<PlatformPage setPage={setPage}/>}
-      {page==="sectors"&&<SectorsPage setPage={setPage}/>}
-      {page==="ha"&&<HAPage setPage={setPage}/>}
-      {page==="la"&&<LAPage setPage={setPage}/>}
-      {page==="nhs"&&<NHSPage setPage={setPage}/>}
-      {page==="police"&&<PolicePage setPage={setPage}/>}
-      {page==="uni"&&<UniPage setPage={setPage}/>}
-      {page==="alb"&&<ALBPage setPage={setPage}/>}
-      {page==="pricing"&&<PricingPage setPage={setPage}/>}
-      {page==="about"&&<AboutPage setPage={setPage}/>}
-      {page==="start"&&<StartPage/>}
+      <Nav setPage={setPage}/>
+
+      <Routes>
+        <Route path="/" element={<Home setPage={setPage} />} />
+        <Route path="/platform" element={<PlatformPage setPage={setPage}/>} />
+        <Route path="/sectors" element={<SectorsPage setPage={setPage}/>} />
+        <Route path="/ha" element={<HAPage setPage={setPage}/>} />
+        <Route path="/la" element={<LAPage setPage={setPage}/>} />
+        <Route path="/nhs" element={<NHSPage setPage={setPage}/>} />
+        <Route path="/police" element={<PolicePage setPage={setPage}/>} />
+        <Route path="/uni" element={<UniPage setPage={setPage}/>} />
+        <Route path="/alb" element={<ALBPage setPage={setPage}/>} />
+        <Route path="/pricing" element={<PricingPage setPage={setPage}/>} />
+        <Route path="/about" element={<AboutPage setPage={setPage}/>} />
+        <Route path="/start" element={<StartPage/>} />
+      </Routes>
+      
       <Footer setPage={setPage}/>
     </div>
   );
