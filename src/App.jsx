@@ -951,7 +951,7 @@ export default function StrataAI(){
       <Nav setPage={setPage}/>
 
       <Routes>
-        <Route path="/" element={<Home setPage={setPage} />} />
+        <Route path="/*" element={<Home setPage={setPage} />} />
         <Route path="/platform" element={<PlatformPage setPage={setPage}/>} />
         <Route path="/sectors" element={<SectorsPage setPage={setPage}/>} />
         <Route path="/ha" element={<HAPage setPage={setPage}/>} />
