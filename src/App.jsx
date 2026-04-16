@@ -7,7 +7,7 @@ const submitForm = async formData => {
   await fetch('https://strata-crm-rho.vercel.app/api/contacts', {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${process.env.REACT_APP_CRM_API}`,
+      'Authorization': `Bearer ${import.meta.env.VITE_CRM_API}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
@@ -713,7 +713,7 @@ function StartPage(){
 function Footer({setPage}){
   return(
     <footer style={{background:BG,padding:"40px 24px 28px",borderTop:"1px solid rgba(255,255,255,0.04)"}}>
-      <div style={{maxWidth:960,margin:"0 auto"}} data-type={process.env.REACT_APP_TEST}>
+      <div style={{maxWidth:960,margin:"0 auto"}} data-type={import.meta.env.VITE_APP_TEST}>
         <div className="g4" style={{display:"grid",gridTemplateColumns:"2fr 1fr 1fr 1fr",gap:32,marginBottom:32}}>
           <div>
             <div style={{display:"flex",alignItems:"baseline",gap:5,marginBottom:10}}><span style={{fontFamily:os,fontWeight:500,fontSize:16,color:"#fff",letterSpacing:"0.06em"}}>STRATA</span><span style={{fontFamily:os,fontWeight:500,fontSize:16,color:TL,letterSpacing:"0.06em"}}>AI</span></div>
