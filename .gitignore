@@ -5,3 +5,4 @@ package-lock.json
 /dist
 .DS_Store
 /old_app
+.DS_Store
