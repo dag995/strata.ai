@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Routes, Route, useNavigate } from 'react-router-dom';
-
+import StrataContractsLP from './ap'
 
 const submitForm = async formData => {
   // { first:"",last:"",email:"",org:"",role:"",interest:"",msg:"" }
@@ -963,6 +963,7 @@ export default function StrataAI(){
         <Route path="/pricing" element={<PricingPage setPage={setPage}/>} />
         <Route path="/about" element={<AboutPage setPage={setPage}/>} />
         <Route path="/start" element={<StartPage/>} />
+        <Route path="/ap" element={<StrataContractsLP setPage={setPage} />} />
       </Routes>
       
       <Footer setPage={setPage}/>
