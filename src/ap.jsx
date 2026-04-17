@@ -1,5 +1,97 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
+function StartPage(){
+  const[done,setDone]=useState(false);
+  const[f,sF]=useState({ first:"",last:"",email:"",org:"",role:"",interest:"",msg:"" });
+  const u=(k,v)=>sF(p=>({...p,[k]:v}));const ok=f.first&&f.last&&f.email&&f.org;
+  return(
+    <section style={{background:`linear-gradient(170deg,${BG} 0%,${S1} 100%)`,minHeight:"100vh",paddingTop:80,position:"relative",overflow:"hidden"}}>
+      <div style={{position:"absolute",top:"10%",right:"-5%",width:400,height:400,background:`radial-gradient(circle,${T}08 0%,transparent 60%)`,borderRadius:"50%",filter:"blur(60px)"}}/>
+      <div style={{padding:"clamp(40px,6vw,80px) 24px"}}><div style={{maxWidth:600,margin:"0 auto",position:"relative",zIndex:1}}>
+        <F><div style={{textAlign:"center",marginBottom:36}}>
+          <h2 style={{fontFamily:os,fontWeight:500,fontSize:"clamp(26px,4.5vw,44px)",color:"#fff",lineHeight:1.1,marginBottom:16,textTransform:"uppercase"}}>Start free. See what you are missing.</h2>
+          <p style={{fontFamily:rb,fontSize:16,fontWeight:300,color:"rgba(255,255,255,0.6)",lineHeight:1.75,marginBottom:8}}>Upload your contracts and invoices. The platform shows you what does not match. No time limit. Upgrade when you are ready.</p>
+          <p style={{fontFamily:rb,fontSize:14,fontWeight:300,color:"rgba(255,255,255,0.45)"}}>Free forever on the starter plan.</p>
+        </div></F>
+        {done?(
+          <F><div style={{background:"rgba(20,163,168,0.08)",border:`1px solid rgba(20,163,168,0.25)`,borderRadius:8,padding:"44px 32px",textAlign:"center"}}>
+            <div style={{color:TL,fontSize:36,marginBottom:16}}>{"\u2713"}</div>
+            <h3 style={{fontFamily:os,fontSize:24,color:"#fff",fontWeight:500,marginBottom:12,textTransform:"uppercase"}}>Welcome to Strata</h3>
+            <p style={{fontFamily:rb,fontSize:15,color:"rgba(255,255,255,0.7)",lineHeight:1.7}}>We will be in touch within 48 hours to get you set up.</p>
+          </div></F>
+        ):(
+          <F d={0.1}>
+          <div style={{...cd,padding:"clamp(24px,3vw,32px)"}}>
+            <div className="g2" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
+              <div>
+                <label style={{fontFamily:rb,fontSize:11,fontWeight:500,color:"rgba(255,255,255,0.6)",display:"block",marginBottom:6}}>First Name *</label>
+                <input type="text" placeholder="First name" value={f.name} onChange={e=>u("first",e.target.value)}/>
+              </div>
+              <div>
+                <label style={{fontFamily:rb,fontSize:11,fontWeight:500,color:"rgba(255,255,255,0.6)",display:"block",marginBottom:6}}>Surname *</label>
+                <input type="text" placeholder="Surname" value={f.name} onChange={e=>u("last",e.target.value)}/>
+              </div>
+              <div>
+                <label style={{fontFamily:rb,fontSize:11,fontWeight:500,color:"rgba(255,255,255,0.6)",display:"block",marginBottom:6}}>Email *</label>
+                <input type="email" placeholder="you@organisation.org.uk" value={f.email} onChange={e=>u("email",e.target.value)}/>
+              </div>
+              <div>
+                <label style={{fontFamily:rb,fontSize:11,fontWeight:500,color:"rgba(255,255,255,0.6)",display:"block",marginBottom:6}}>Organisation *</label>
+                <input type="text" placeholder="Your organisation" value={f.org} onChange={e=>u("org",e.target.value)}/>
+              </div>
+            </div>
+            <div style={{marginTop:12}}>
+              <label style={{fontFamily:rb,fontSize:11,fontWeight:500,color:"rgba(255,255,255,0.6)",display:"block",marginBottom:6}}>Role</label>
+              <input type="text" placeholder="e.g. Director of Finance" value={f.role} onChange={e=>u("role",e.target.value)} />
+            </div>
+            {/* <div style={{marginTop:12}}><label style={{fontFamily:rb,fontSize:11,fontWeight:500,color:"rgba(255,255,255,0.6)",display:"block",marginBottom:6}}>Which product interests you most?</label>
+              <select value={f.interest} onChange={e=>u("interest",e.target.value)}><option value="">Select</option><option value="contracts">Strata | Contracts</option><option value="requests">Strata | Requests</option><option value="charges">Strata | Charges</option><option value="rents">Strata | Rents</option><option value="all">Full platform</option></select>
+            </div> */}
+            <div style={{marginTop:12}}><label style={{fontFamily:rb,fontSize:11,fontWeight:500,color:"rgba(255,255,255,0.6)",display:"block",marginBottom:6}}>What is your biggest compliance challenge?</label>
+              <textarea rows={3} placeholder="Optional, but helps us tailor your setup" value={f.msg} onChange={e=>u("msg",e.target.value)} style={{resize:"vertical"}}/>
+            </div>
+            <button 
+              onClick={()=>ok&&submitForm(f)&&setDone(true)} 
+              disabled={!ok} 
+              style={{fontFamily:rb,fontSize:15,fontWeight:500,background:T,color:"#fff",border:"none",borderRadius:6,padding:"14px 32px",cursor:ok?"pointer":"default",marginTop:18,width:"100%",display:"flex",alignItems:"center",justifyContent:"center",gap:8,boxShadow:`0 0 40px ${T}25`,opacity:ok?1:0.4}} 
+              onMouseEnter={e=>ok&&(e.currentTarget.style.transform="translateY(-2px)")} 
+              onMouseLeave={e=>e.currentTarget.style.transform="none"}
+            >Get started free <Ic d="arrow"/></button>
+          </div></F>
+        )}
+        <F d={0.25}><div style={{marginTop:44,display:"flex",justifyContent:"center",gap:40,flexWrap:"wrap"}}>
+          {[["Email","hello@wearestrata.ai"],["Web","wearestrata.ai"]].map(([l,v])=>(<div key={l} style={{textAlign:"center"}}><div style={{fontFamily:rb,fontSize:11,fontWeight:300,color:"rgba(255,255,255,0.4)",marginBottom:3}}>{l}</div><div style={{fontFamily:rb,fontSize:14,fontWeight:400,color:TL}}>{v}</div></div>))}
+        </div></F>
+      </div></div>
+    </section>
+  );
+}
+
+
+const submitForm = async formData => {
+  // { first:"",last:"",email:"",org:"",role:"",interest:"",msg:"" }
+  await fetch('https://strata-crm-rho.vercel.app/api/contacts', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${import.meta.env.VITE_CRM_API}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      first_name: formData.first,
+      last_name: formData.last,
+      email: formData.email,
+      job_title: `${formData.role} @ ${formData.org}`,
+      // organisation_id: formData.org,
+      source: 'Website',
+      notes: formData.msg
+    })
+  })
+  .then(response => response.json())
+  .then(response => console.log(response))
+  return true
+}
+
+
 /* ═══ DESIGN TOKENS ═══ */
 const T = "#0D7377";
 const TL = "#14A3A8";
@@ -361,59 +453,7 @@ export default function StrataContractsLP({setPage}) {
       </section>
 
       {/* ═══ FREE TRIAL ═══ */}
-      <section id="start" style={{ ...section, background: S2, position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: 800, height: 800, background: `radial-gradient(circle,${T}10 0%,transparent 60%)`, borderRadius: "50%", filter: "blur(80px)" }} />
-        <div style={{ maxWidth: 680, margin: "0 auto", position: "relative", zIndex: 1 }}>
-          <F>
-            <div style={{ textAlign: "center" }}>
-              <p style={lbl}>Free trial</p>
-              <h2 style={{ ...hd("clamp(22px,3.5vw,34px)"), lineHeight: 1.2, marginBottom: 20 }}>See how much you would have saved.</h2>
-            </div>
-          </F>
-          <F d={0.1}>
-            <div style={{ textAlign: "center" }}>
-              <p style={{ ...bw, marginBottom: 12, maxWidth: 580, marginLeft: "auto", marginRight: "auto" }}>
-                Give us a subset of your supplier contracts and the associated invoices for the last three months. We will show you exactly how much you would have saved, which contract clauses were missed, and where the leakage is happening.
-              </p>
-              <p style={{ fontFamily: rb, fontSize: 14, fontWeight: 400, color: TL, marginBottom: 24 }}>
-                No cost. No commitment. Just evidence.
-              </p>
-            </div>
-          </F>
-          <F d={0.2}>
-            <div style={{ ...cd, padding: "clamp(28px,4vw,40px)" }}>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
-                <div>
-                  <label style={{ fontFamily: rb, fontSize: 11, color: "rgba(255,255,255,0.4)", display: "block", marginBottom: 6, letterSpacing: "0.04em", textTransform: "uppercase" }}>Name</label>
-                  <input type="text" placeholder="Your name" value={formData.name} onChange={e => upd("name", e.target.value)} />
-                </div>
-                <div>
-                  <label style={{ fontFamily: rb, fontSize: 11, color: "rgba(255,255,255,0.4)", display: "block", marginBottom: 6, letterSpacing: "0.04em", textTransform: "uppercase" }}>Organisation</label>
-                  <input type="text" placeholder="Your organisation" value={formData.org} onChange={e => upd("org", e.target.value)} />
-                </div>
-              </div>
-              <div style={{ marginBottom: 16 }}>
-                <label style={{ fontFamily: rb, fontSize: 11, color: "rgba(255,255,255,0.4)", display: "block", marginBottom: 6, letterSpacing: "0.04em", textTransform: "uppercase" }}>Email</label>
-                <input type="email" placeholder="your.name@organisation.com" value={formData.email} onChange={e => upd("email", e.target.value)} />
-              </div>
-              <div style={{ marginBottom: 16 }}>
-                <label style={{ fontFamily: rb, fontSize: 11, color: "rgba(255,255,255,0.4)", display: "block", marginBottom: 6, letterSpacing: "0.04em", textTransform: "uppercase" }}>Approximate number of supplier contracts</label>
-                <input type="text" placeholder="e.g. 50, 200, 500+" value={formData.contracts} onChange={e => upd("contracts", e.target.value)} />
-              </div>
-              <div style={{ marginBottom: 24 }}>
-                <label style={{ fontFamily: rb, fontSize: 11, color: "rgba(255,255,255,0.4)", display: "block", marginBottom: 6, letterSpacing: "0.04em", textTransform: "uppercase" }}>Anything else</label>
-                <textarea rows={3} placeholder="Tell us about your current process" value={formData.msg} onChange={e => upd("msg", e.target.value)} />
-              </div>
-              <button onClick={handleSubmit} style={{ ...btn, width: "100%", justifyContent: "center" }} onMouseEnter={hov} onMouseLeave={unhov}>
-                Request your free trial <Ic d="arrow" />
-              </button>
-              <p style={{ fontFamily: rb, fontSize: 11, color: "rgba(255,255,255,0.3)", textAlign: "center", marginTop: 12 }}>
-                We will be in touch within 24 hours to arrange your trial.
-              </p>
-            </div>
-          </F>
-        </div>
-      </section>
+      <StartPage />
 
       {/* ═══ FOOTER ═══ */}
       <footer style={{ background: BG, padding: "40px 24px 28px", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
