@@ -735,6 +735,16 @@ function Footer({setPage}){
           </div>
         </div>
         <div className="fw" style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:16,paddingTop:20,borderTop:"1px solid rgba(255,255,255,0.05)"}}>
+          <p style={{fontFamily:rb,fontSize:11,fontWeight:300,color:"rgba(255,255,255,0.3)"}}>
+          <a href="/privacy-policy.docx" title="privacy-policy">privacy policy</a>
+          &nbsp;
+          <a href="/terms-of-use.docx" title="terms-of-use">terms of use</a>
+          &nbsp;
+          <a href="/cookie-policy.docx" title="cookie-policy">cookie policy</a>
+          </p>
+          
+        </div>
+        <div className="fw" style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:16,paddingTop:20,borderTop:"1px solid rgba(255,255,255,0.05)"}}>
           <p style={{fontFamily:rb,fontSize:11,fontWeight:300,color:"rgba(255,255,255,0.3)"}}>WeAreStrata Limited. Registered in England and Wales, No. 16974757. 4 Usk Vale Court, Pontypool, Wales, NP4 8AS.</p>
           <p style={{fontFamily:rb,fontSize:11,fontWeight:300,color:"rgba(255,255,255,0.3)"}}>Patent Pending: US 63/969,838 Recursive Logic Caching{"\u2122"}</p>
         </div>
