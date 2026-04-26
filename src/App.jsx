@@ -7,7 +7,7 @@ import { Nav, Footer } from "./components";
 export default function StrataAI(){
   
   const setPage = useNavigate()
-  const location = useLocation();
+  const location = useLocation()
 
   useEffect(() => { 
     document.title = ({
@@ -38,15 +38,10 @@ export default function StrataAI(){
         <Route path="/la" element={<LAPage setPage={setPage}/>} />
         <Route path="/nhs" element={<NHSPage setPage={setPage}/>} />
         <Route path="/commercial" element={<CommercialPage setPage={setPage}/>} />
-        <Route path="/resources" element={<ResourcesPage setPage={setPage}/>} />
-        
-        {/* <Route path="/police" element={<PolicePage setPage={setPage}/>} /> */}
-        {/* <Route path="/uni" element={<UniPage setPage={setPage}/>} /> */}
-        {/* <Route path="/alb" element={<ALBPage setPage={setPage}/>} /> */}
         <Route path="/pricing" element={<PricingPage setPage={setPage}/>} />
+        <Route path="/resources" element={<ResourcesPage setPage={setPage}/>} />
         <Route path="/about" element={<AboutPage setPage={setPage}/>} />
         <Route path="/start" element={<StartPage/>} />
-        {/* <Route path="/ap" element={<StrataContractsLP setPage={setPage} />} /> */}
       </Routes>
       <Footer setPage={setPage} />
     </>
