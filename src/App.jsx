@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { Home, PlatformPage, SectorsPage, HAPage, LAPage, NHSPage, CommercialPage, PricingPage, AboutPage, StartPage, ResourcesPage } from './components'
 import { Nav, Footer } from "./components";
+import { Cookies } from "./components/cookies";
 
 /* ═══ APP ═══ */
 export default function StrataAI(){
@@ -42,6 +43,7 @@ export default function StrataAI(){
         <Route path="/resources" element={<ResourcesPage setPage={setPage}/>} />
         <Route path="/about" element={<AboutPage setPage={setPage}/>} />
         <Route path="/start" element={<StartPage/>} />
+        <Route path="cookies" element={<Cookies/>} />
       </Routes>
       <Footer setPage={setPage} />
     </>
