@@ -183,7 +183,7 @@ export function Footer({ setPage }) {
               fontFamily: FONT, fontSize: 14, color: CF.ink3, lineHeight: 1.65,
               marginTop: 16, maxWidth: 300,
             }}>
-              Compliance intelligence for UK public sector<br/>and commercial organisations.
+              Compliance intelligence for UK public sector and commercial organisations.
             </p>
           </div>
           <div>
@@ -232,7 +232,11 @@ export function Footer({ setPage }) {
               fontFamily: FONT, fontSize: 13, color: CF.ink3, cursor: "pointer", transition: "color 0.15s",
             }} onMouseEnter={e => e.target.style.color = CF.orange}
                onMouseLeave={e => e.target.style.color = CF.ink3}
-            ><a href={pg} title={l}>{l}</a></p>
+            ><a 
+              href={pg} 
+              style={{fontFamily: FONT, fontSize: 13, color: CF.ink3, cursor: "pointer", transition: "color 0.15s",}} 
+              title={l}
+            >{l}</a></p>
           ))}
         </div>
 
