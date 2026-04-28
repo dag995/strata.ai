@@ -232,7 +232,7 @@ export function Footer({ setPage }) {
               fontFamily: FONT, fontSize: 13, color: CF.ink3, cursor: "pointer", transition: "color 0.15s",
             }} onMouseEnter={e => e.target.style.color = CF.orange}
                onMouseLeave={e => e.target.style.color = CF.ink3}
-            ><a href={l[1]} title={l[0]}>{l[0]}</a></p>
+            ><a href={pg} title={l}>{l}</a></p>
           ))}
         </div>
 
