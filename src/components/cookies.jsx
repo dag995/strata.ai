@@ -1,3 +1,5 @@
+import { CF, FONT, MONO, eyebrow, h1Style, h2Style, h3Style, leadStyle, bodyStyle, smallStyle, cardStyle, btnPrimary, btnSecondary, btnGhost, hovPrimary, unhovPrimary, hovSecondary, unhovSecondary } from './tokens'
+
 export function Cookies({ setPage }) {
   return (
     <section style={{ background: CF.bg, minHeight: "100vh", paddingTop: 64 }}>
