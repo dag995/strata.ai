@@ -224,9 +224,9 @@ export function Footer({ setPage }) {
           paddingTop: 24, borderTop: `1px solid ${CF.line}`, marginBottom: 18,
         }}>
           {[
-            ["Privacy Policy", "/privacy-policy.docx"], 
-            ["Terms of Use", "/terms-of-use.docx"], 
-            ["Cookie Policy", "/cookie-policy.docx"]
+            ["Privacy Policy", "/privacy"], 
+            ["Terms of Use", "/terms"], 
+            ["Cookie Policy", "/cookie-policy"]
           ].map(([l, pg]) => (
             <p key={pg} style={{
               fontFamily: FONT, fontSize: 13, color: CF.ink3, cursor: "pointer", transition: "color 0.15s",
