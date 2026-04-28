@@ -223,13 +223,16 @@ export function Footer({ setPage }) {
           display: "flex", gap: 24, flexWrap: "wrap",
           paddingTop: 24, borderTop: `1px solid ${CF.line}`, marginBottom: 18,
         }}>
-          {[["Privacy Policy", "privacy"], ["Terms of Use", "terms"], ["Cookie Policy", "cookies"]].map(([l, pg]) => (
+          {[
+            ["Privacy Policy", "/privacy-policy.docx"], 
+            ["Terms of Use", "/terms-of-use.docx"], 
+            ["Cookie Policy", "/cookie-policy.docx"]
+          ].map(([l, pg]) => (
             <p key={pg} style={{
               fontFamily: FONT, fontSize: 13, color: CF.ink3, cursor: "pointer", transition: "color 0.15s",
             }} onMouseEnter={e => e.target.style.color = CF.orange}
                onMouseLeave={e => e.target.style.color = CF.ink3}
-               onClick={() => setPage(pg)}
-            >{l}</p>
+            ><a href={l[1]} title={l[0]}>{l[0]}</a></p>
           ))}
         </div>
 
