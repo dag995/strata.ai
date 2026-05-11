@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { Home, PlatformPage, SectorsPage, HAPage, LAPage, NHSPage, CommercialPage, PricingPage, AboutPage, StartPage, ResourcesPage } from './components'
-import { Nav, Footer } from "./components";
-import { Cookies } from "./components/cookies";
-import { Privacy } from "./components/privacy";
-import { Terms } from "./components/terms";
+import { Nav, Footer } from "./components"
+import { Cookies } from "./components/cookies"
+import { Privacy } from "./components/privacy"
+import { Terms } from "./components/terms"
+import FCFPage from "./components/fcf"
 
 /* ═══ APP ═══ */
 export default function StrataAI(){
@@ -45,6 +46,8 @@ export default function StrataAI(){
         <Route path="/resources" element={<ResourcesPage setPage={setPage}/>} />
         <Route path="/about" element={<AboutPage setPage={setPage}/>} />
         <Route path="/start" element={<StartPage/>} />
+        <Route path="/fcf" element={<FCFPage setPage={setPage} />} />
+        
         <Route path="/terms" element={<Terms/>} />
         <Route path="/privacy" element={<Privacy/>} />
         <Route path="/cookie-policy" element={<Cookies/>} />
