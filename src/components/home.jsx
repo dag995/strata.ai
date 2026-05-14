@@ -3,6 +3,124 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { FDiv, Ic, PRODUCTS } from '../components'
 import { CF, FONT, MONO, eyebrow, h1Style, h2Style, h3Style, leadStyle, bodyStyle, smallStyle, cardStyle, btnPrimary, btnSecondary, btnGhost, hovPrimary, unhovPrimary, hovSecondary, unhovSecondary } from './tokens'
 
+/* ────────────────────────────────────────────────────────────────────────
+   Promo bar — sits above the global nav. Renders only on the home page.
+   Dismissible; close state stored in sessionStorage so it reappears
+   on the visitor's next browser session.
+
+   Clicking the bar (or the arrow) takes the visitor to /fcf.
+   To remove the campaign entirely: delete the <PromoBar/> element from
+   the Home component's render output.
+   ──────────────────────────────────────────────────────────────────────── */
+function PromoBar() {
+  const [open, setOpen] = useState(true);
+  const [hover, setHover] = useState(false);
+  const [hoverClose, setHoverClose] = useState(false);
+
+  useEffect(() => {
+    if (typeof sessionStorage !== "undefined" && sessionStorage.getItem("promoDismissed") === "1") {
+      setOpen(false);
+    }
+    // Pad the body so the fixed nav (which the rest of the site assumes starts
+    // at top:0) sits visually below the promo bar. We do this by setting a CSS
+    // variable that the global nav can opt into, OR by adjusting body padding.
+    // Simplest: push the whole page down by the bar height while it's visible.
+    const root = document.documentElement;
+    if (open) {
+      root.style.setProperty("--promo-h", "42px");
+      root.style.scrollPaddingTop = "calc(var(--promo-h, 0px) + 80px)";
+    } else {
+      root.style.setProperty("--promo-h", "0px");
+    }
+    return () => {
+      root.style.setProperty("--promo-h", "0px");
+    };
+  }, [open]);
+
+  if (!open) return null;
+
+  const dismiss = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    try { sessionStorage.setItem("promoDismissed", "1"); } catch {}
+    setOpen(false);
+  };
+
+  const go = () => {
+    window.location.href = "/fcf";
+  };
+
+  return (
+    <div
+      onClick={go}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        position: "fixed",
+        top: 0, left: 0, right: 0,
+        zIndex: 1100,
+        background: CF.ink,
+        color: "#fff",
+        cursor: "pointer",
+        userSelect: "none",
+      }}
+    >
+      <div style={{
+        maxWidth: 1280, margin: "0 auto",
+        padding: "10px 56px 10px 28px",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        gap: 12, position: "relative",
+      }}>
+        <span style={{
+          fontFamily: FONT, fontSize: 14, fontWeight: 500,
+          letterSpacing: "-0.005em",
+          opacity: hover ? 0.88 : 1,
+          transition: "opacity 0.15s",
+          textAlign: "center",
+        }}>
+          For finance leaders:{" "}
+          <span style={{ color: CF.orange, fontWeight: 600 }}>100&ndash;300 bps of FCF</span>
+          , hidden in your supplier contracts
+        </span>
+
+        <span style={{
+          display: "inline-flex", alignItems: "center",
+          transform: hover ? "translateX(3px)" : "translateX(0)",
+          transition: "transform 0.2s",
+          opacity: hover ? 0.88 : 1,
+        }} className="promo-arrow">
+          <Ic d="arrow" size={14}/>
+        </span>
+
+        <button
+          onClick={dismiss}
+          onMouseEnter={() => setHoverClose(true)}
+          onMouseLeave={() => setHoverClose(false)}
+          aria-label="Dismiss"
+          style={{
+            position: "absolute",
+            right: 16, top: "50%", transform: "translateY(-50%)",
+            background: hoverClose ? "rgba(255,255,255,0.08)" : "transparent",
+            border: "none", cursor: "pointer",
+            color: hoverClose ? "#fff" : "rgba(255,255,255,0.55)",
+            padding: 6, borderRadius: 4,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            transition: "color 0.15s, background 0.15s",
+            lineHeight: 0,
+          }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" strokeWidth="2"
+            strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  );
+}
+
 /* Decorative "product dashboard" mock for the hero — clean flat cards, no photo placeholder */
 function HeroMock() {
   return (
@@ -97,6 +215,7 @@ export function Calculator({ setPage, bg = CF.bg2 }) {
           <h2 style={h2Style}>Calculate your exposure.</h2>
           <p style={leadStyle}>Drag the sliders to match your organisation.</p>
         </FDiv>
+
         <div className="g2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
           <FDiv d={0.08}>
             <div style={{ ...cardStyle, padding: 28 }}>
@@ -130,6 +249,7 @@ export function Calculator({ setPage, bg = CF.bg2 }) {
               </div>
             </div>
           </FDiv>
+
           <FDiv d={0.16}>
             <div style={{ ...cardStyle, padding: 28 }}>
               <div style={{
@@ -138,34 +258,31 @@ export function Calculator({ setPage, bg = CF.bg2 }) {
               }}>FOI processing cost</div>
 
               <div style={sr}><span style={sl}>Monthly FOI requests</span>
-                <input type="range" min={5} max={200} step={5} value={foiReqs}
+                <input type="range" min={5} max={300} step={5} value={foiReqs}
                   onChange={e => setFoiReqs(+e.target.value)} style={{ flex: 1, accentColor: CF.orange }}/>
                 <span style={sv}>{foiReqs}</span>
               </div>
               <div style={sr}><span style={sl}>Hours per request</span>
-                <input type="range" min={2} max={12} step={0.5} value={foiHrs}
+                <input type="range" min={1} max={20} step={0.5} value={foiHrs}
                   onChange={e => setFoiHrs(+e.target.value)} style={{ flex: 1, accentColor: CF.orange }}/>
-                <span style={sv}>{foiHrs.toFixed(1)}</span>
+                <span style={sv}>{foiHrs.toFixed(1)} hrs</span>
               </div>
 
-              <div style={{ borderTop: `1px solid ${CF.line}`, marginTop: 60, paddingTop: 20 }}>
+              <div style={{ borderTop: `1px solid ${CF.line}`, marginTop: 20, paddingTop: 20 }}>
                 <div style={{ fontFamily: FONT, fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 700, color: CF.ink, letterSpacing: "-0.02em" }}>{fmt(foiCost)}</div>
-                <div style={{ fontFamily: MONO, fontSize: 11, color: CF.ink3, marginTop: 6, textTransform: "uppercase", letterSpacing: "0.04em" }}>Annual staff cost on FOI</div>
+                <div style={{ fontFamily: MONO, fontSize: 11, color: CF.ink3, marginTop: 6, textTransform: "uppercase", letterSpacing: "0.04em" }}>Annual processing cost</div>
                 <p style={{ fontFamily: FONT, fontSize: 13, color: CF.ink3, marginTop: 14, lineHeight: 1.65 }}>
-                  Staff time at the statutory rate of £25/hour. Average request takes 5.3 hours.
+                  At a blended rate of £25/hour. Excludes the cost of late or non-compliant responses.
                 </p>
               </div>
             </div>
           </FDiv>
         </div>
 
-        <FDiv d={0.24}>
-          <div style={{ textAlign: "center", marginTop: 32 }}>
-            <p style={{ fontFamily: FONT, fontSize: 14, color: CF.ink3, marginBottom: 16 }}>
-              Want to see the actual leakage in your contracts?
-            </p>
+        <FDiv d={0.3}>
+          <div style={{ textAlign: "center", marginTop: 40 }}>
             <button onClick={() => setPage("start")} style={btnPrimary} onMouseEnter={hovPrimary} onMouseLeave={unhovPrimary}>
-              Upload them free <Ic d="arrow" size={16}/>
+              Start free <Ic d="arrow" size={16}/>
             </button>
           </div>
         </FDiv>
@@ -177,10 +294,14 @@ export function Calculator({ setPage, bg = CF.bg2 }) {
 export function Home({ setPage }) {
   return (
     <>
-      {/* HERO */}
+
+      {/* Promo bar — campaign-driven, dismissible. Linked to /fcf. */}
+      <PromoBar/>
+
+      {/* HERO — top padding bumped by 42px to clear the promo bar */}
       <section style={{
         background: CF.bg,
-        padding: "140px 28px 80px",
+        padding: "182px 28px 80px",
         borderBottom: `1px solid ${CF.line}`,
         position: "relative", overflow: "hidden",
       }}>

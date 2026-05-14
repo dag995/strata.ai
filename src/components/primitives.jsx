@@ -102,12 +102,19 @@ export function Nav({ page, setPage }) {
 
   return (
     <nav style={{
-      position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
+      position: "fixed",
+      // CHANGED: top reads the --promo-h CSS variable so the nav slides
+      // beneath the promo bar when it is rendered (on the home page only).
+      // Fallback of 0px applies on every page where PromoBar is not mounted.
+      top: "var(--promo-h, 0px)",
+      left: 0, right: 0, zIndex: 100,
       background: "rgba(255,255,255,0.92)",
       backdropFilter: "saturate(180%) blur(10px)",
       WebkitBackdropFilter: "saturate(180%) blur(10px)",
       borderBottom: sc ? `1px solid ${CF.line}` : "1px solid transparent",
-      transition: "border-color 0.2s",
+      // CHANGED: added `top` to the transition so the nav slides smoothly
+      // when the promo bar opens or closes.
+      transition: "border-color 0.2s, top 0.2s",
     }}>
       <div style={{
         maxWidth: 1280, margin: "0 auto",

@@ -42,7 +42,7 @@ function HeroNumber() {
         Free cash flow recovered, this quarter, from contracts you have already signed.
       </div>
 
-      {/* Mini line items — reinforces the concrete leak pattern */}
+      {/* Leak breakdown — reconciles to the headline 100-300bps */}
       <div style={{
         background: CF.bg, border: `1px solid ${CF.line2}`,
         borderRadius: 6, padding: 14,
@@ -59,8 +59,8 @@ function HeroNumber() {
         {[
           ["CPI uplifts outside contract terms", "0.4&ndash;0.9%"],
           ["Auto-renewals at non-contracted rates", "0.3&ndash;0.7%"],
-          ["Out-of-scope service charges", "0.2&ndash;0.6%"],
-          ["Volume discounts not applied", "0.1&ndash;0.4%"],
+          ["Out-of-scope service charges", "0.2&ndash;0.8%"],
+          ["Volume discounts not applied", "0.1&ndash;0.6%"],
         ].map(([reason, range], i) => (
           <div key={reason} style={{
             display: "grid",
@@ -101,7 +101,6 @@ export default function FCFPage({ setPage }) {
         borderBottom: `1px solid ${CF.line}`,
         position: "relative", overflow: "hidden",
       }}>
-        {/* Subtle orange wash — same treatment as home hero */}
         <div style={{
           position: "absolute", bottom: "-30%", right: "-10%",
           width: 500, height: 500, borderRadius: "50%",
@@ -116,7 +115,7 @@ export default function FCFPage({ setPage }) {
         }} className="hero-grid">
 
           <div>
-            <FDiv><span style={eyebrow()}>For CFOs at £1bn+ companies</span></FDiv>
+            <FDiv><span style={eyebrow()}>For finance leaders</span></FDiv>
 
             <FDiv d={0.05}>
               <h1 style={h1Style}>
@@ -410,12 +409,6 @@ export default function FCFPage({ setPage }) {
           >
             Request the diagnostic <Ic d="arrow" size={16}/>
           </button>
-          <p style={{
-            ...smallStyle, fontSize: 13, marginTop: 20,
-            maxWidth: 520, margin: "20px auto 0",
-          }}>
-            For CFOs and Directors of Finance at £1bn+ revenue companies.
-          </p>
         </FDiv>
       </section>
 
