@@ -221,7 +221,7 @@ function HeroNumber() {
   );
 }
 
-export function FCFPage({ setPage }) {
+export default function FCFPage({ setPage }) {
   // Ref to the closing CTA section so the floating CTA knows when to hide
   const closingCtaRef = useRef(null);
 
