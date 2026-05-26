@@ -8,6 +8,137 @@ import {
 } from './tokens'
 import { PRODUCTS, SECTORS, HA_PRODUCTS, Ic, FDiv } from '../components'
 
+function FloatingCta({ closingCtaRef }) {
+  const [visible, setVisible] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
+  const [hoverDismiss, setHoverDismiss] = useState(false);
+  const [hoverButton, setHoverButton] = useState(false);
+
+  // Check sessionStorage on mount — has the user already dismissed this session?
+  useEffect(() => {
+    try {
+      if (sessionStorage.getItem("fcfFloatingCtaDismissed") === "1") {
+        setDismissed(true);
+      }
+    } catch {}
+  }, []);
+
+  // Scroll listener — show after 600px, hide when closing CTA is in view
+  useEffect(() => {
+    if (dismissed) return;
+
+    const handleScroll = () => {
+      const scrolledPastHero = window.scrollY > 600;
+
+      // Hide when closing CTA section is visible to avoid duplication
+      let closingCtaInView = false;
+      if (closingCtaRef && closingCtaRef.current) {
+        const rect = closingCtaRef.current.getBoundingClientRect();
+        // "In view" means the closing CTA section's top is above the viewport bottom
+        // and its bottom is below the viewport top
+        closingCtaInView = rect.top < window.innerHeight && rect.bottom > 0;
+      }
+
+      setVisible(scrolledPastHero && !closingCtaInView);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // Check once on mount in case the user is already scrolled
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [dismissed, closingCtaRef]);
+
+  const dismiss = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    try { sessionStorage.setItem("fcfFloatingCtaDismissed", "1"); } catch {}
+    setDismissed(true);
+    setVisible(false);
+  };
+
+  if (dismissed) return null;
+
+  return (
+    <div
+      style={{
+        position: "fixed",
+        bottom: 24,
+        right: 24,
+        zIndex: 90,
+        display: "flex",
+        alignItems: "stretch",
+        background: CF.ink,
+        borderRadius: 8,
+        boxShadow: visible
+          ? "0 10px 40px rgba(29, 29, 27, 0.18), 0 4px 14px rgba(29, 29, 27, 0.10)"
+          : "none",
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(20px)",
+        transition: "opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease",
+        pointerEvents: visible ? "auto" : "none",
+        overflow: "hidden",
+      }}
+    >
+      {/* Main CTA button */}
+      <button
+        onClick={() => openBooking("floating")}
+        onMouseEnter={() => setHoverButton(true)}
+        onMouseLeave={() => setHoverButton(false)}
+        style={{
+          background: hoverButton ? CF.orangeDark : CF.orange,
+          color: "#fff",
+          border: "none",
+          padding: "14px 20px",
+          fontFamily: FONT,
+          fontSize: 14,
+          fontWeight: 500,
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          gap: 8,
+          transition: "background 0.15s",
+          whiteSpace: "nowrap",
+        }}
+      >
+        Book 30 min with Neal
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" strokeWidth="2"
+          strokeLinecap="round" strokeLinejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </button>
+
+      {/* Dismiss × button */}
+      <button
+        onClick={dismiss}
+        onMouseEnter={() => setHoverDismiss(true)}
+        onMouseLeave={() => setHoverDismiss(false)}
+        aria-label="Dismiss"
+        style={{
+          background: hoverDismiss ? "rgba(255,255,255,0.08)" : "transparent",
+          border: "none",
+          borderLeft: "1px solid rgba(255,255,255,0.12)",
+          cursor: "pointer",
+          color: hoverDismiss ? "#fff" : "rgba(255,255,255,0.55)",
+          padding: "0 12px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          transition: "color 0.15s, background 0.15s",
+        }}
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" strokeWidth="2"
+          strokeLinecap="round" strokeLinejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  );
+}
+
 function HeroNumber() {
   return (
     <div style={{
@@ -90,7 +221,10 @@ function HeroNumber() {
   );
 }
 
-export default function FCFPage({ setPage }) {
+export function FCFPage({ setPage }) {
+  // Ref to the closing CTA section so the floating CTA knows when to hide
+  const closingCtaRef = useRef(null);
+
   return (
     <>
 
@@ -142,12 +276,12 @@ export default function FCFPage({ setPage }) {
             <FDiv d={0.2}>
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                 <button
-                  onClick={() => setPage("start")}
+                  onClick={() => openBooking("hero")}
                   style={btnPrimary}
                   onMouseEnter={hovPrimary}
                   onMouseLeave={unhovPrimary}
                 >
-                  See what is hiding in yours <Ic d="arrow" size={16}/>
+                  Book a demo with Neal <Ic d="arrow" size={16}/>
                 </button>
                 <button
                   onClick={() => setPage("platform")}
@@ -388,8 +522,8 @@ export default function FCFPage({ setPage }) {
         </div>
       </section>
 
-      {/* CLOSING CTA */}
-      <section style={{
+      {/* CLOSING CTA — ref attached so the floating CTA can hide when this is in view */}
+      <section ref={closingCtaRef} style={{
         background: "#fff",
         padding: "clamp(72px, 10vw, 100px) 28px",
         textAlign: "center",
@@ -399,18 +533,22 @@ export default function FCFPage({ setPage }) {
             See what is hiding <span style={{ color: CF.orange }}>in your contracts.</span>
           </h2>
           <p style={{ ...leadStyle, textAlign: "center", margin: "0 auto 32px" }}>
-            Send us three contracts and fifty invoices. We will show you exactly where the gap is. No charge. No obligation. Two-week turnaround.
+            Thirty minutes with Neal. We will walk you through how Strata finds the leakage in your supplier contracts and what a typical recovery looks like.
           </p>
           <button
-            onClick={() => setPage("start")}
+            onClick={() => openBooking("closing")}
             style={btnPrimary}
             onMouseEnter={hovPrimary}
             onMouseLeave={unhovPrimary}
           >
-            Request the diagnostic <Ic d="arrow" size={16}/>
+            Book a demo with Neal <Ic d="arrow" size={16}/>
           </button>
         </FDiv>
       </section>
+
+      {/* Floating CTA — sits bottom-right after scroll past hero,
+          hides when closing CTA is in view, dismissible per session */}
+      <FDivloatingCta closingCtaRef={closingCtaRef}/>
 
     </>
   );
