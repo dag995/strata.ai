@@ -8,6 +8,18 @@ import {
 } from './tokens'
 import { PRODUCTS, SECTORS, HA_PRODUCTS, Ic, FDiv } from '../components'
 
+// Calendar booking link — Neal's diagnostic call appointment schedule
+const BOOKING_URL = "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2F2GPvBKj2uC_EXfHQcU398-UlvA15fepxjU8fEaUn2_EaTKwba4XN1qlT7RsEACwNyaM9nFYD?gv=true";
+
+// Helper — opens booking page in new tab so the FCF page stays open behind it.
+// Also fires a GA4 event for click tracking, so we can see which CTA converted.
+function openBooking(location) {
+  if (typeof window.gtag === "function") {
+    window.gtag("event", "book_demo_click", { location });
+  }
+  window.open(BOOKING_URL, "_blank", "noopener,noreferrer");
+}
+
 function FloatingCta({ closingCtaRef }) {
   const [visible, setVisible] = useState(false);
   const [dismissed, setDismissed] = useState(false);
