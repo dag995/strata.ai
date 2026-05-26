@@ -548,7 +548,7 @@ export function FCFPage({ setPage }) {
 
       {/* Floating CTA — sits bottom-right after scroll past hero,
           hides when closing CTA is in view, dismissible per session */}
-      <FDivloatingCta closingCtaRef={closingCtaRef}/>
+      <FloatingCta closingCtaRef={closingCtaRef}/>
 
     </>
   );
