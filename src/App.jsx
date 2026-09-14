@@ -42,7 +42,7 @@ export default function StrataAI(){
         <Route path="/la" element={<LAPage setPage={setPage}/>} />
         <Route path="/nhs" element={<NHSPage setPage={setPage}/>} />
         <Route path="/commercial" element={<CommercialPage setPage={setPage}/>} />
-        <Route path="/pricing" element={<PricingPage setPage={setPage}/>} />
+        {/* <Route path="/pricing" element={<PricingPage setPage={setPage}/>} /> */}
         <Route path="/resources" element={<ResourcesPage setPage={setPage}/>} />
         <Route path="/about" element={<AboutPage setPage={setPage}/>} />
         <Route path="/start" element={<StartPage/>} />

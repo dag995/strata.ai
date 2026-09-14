@@ -94,7 +94,7 @@ export function Nav({ page, setPage }) {
   const links = [
     { l: "Platform", a: () => setPage("platform") },
     { l: "Sectors", a: () => setPage("sectors") },
-    { l: "Pricing", a: () => setPage("pricing") },
+    // { l: "Pricing", a: () => setPage("pricing") },
     { l: "Resources", a: () => setPage("resources") },
     { l: "About", a: () => setPage("about") },
   ];
@@ -207,7 +207,10 @@ export function Footer({ setPage }) {
           </div>
           <div>
             <p style={{ fontFamily: FONT, fontSize: 13, fontWeight: 600, color: CF.ink, marginBottom: 14 }}>Company</p>
-            {[["About", "about"], ["Pricing", "pricing"], ["Sectors", "sectors"], ["Resources", "resources"]].map(([l, pg]) => (
+            {[["About", "about"], 
+            // ["Pricing", "pricing"], 
+            ["Sectors", "sectors"], 
+            ["Resources", "resources"]].map(([l, pg]) => (
               <p key={pg} style={{
                 fontFamily: FONT, fontSize: 14, color: CF.ink2, marginBottom: 10, cursor: "pointer",
               }} onClick={() => setPage(pg)}
