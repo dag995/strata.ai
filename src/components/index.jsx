@@ -14,7 +14,7 @@ export {
   PRODUCTS, SECTORS, HA_PRODUCTS, RESOURCES,
   Home, Calculator,
   PlatformPage, SectorsPage, HAPage, LAPage, NHSPage, CommercialPage,
-  // PricingPage, 
+  PricingPage, 
   AboutPage, StartPage, ResourcesPage,
   Ic, useFI, FDiv, Logo, Nav, Footer,
   // CF, FONT, MONO, CF_ORANGE, CF_ORANGE_DARK, CF_ORANGE_TINT, INK, INK_2, INK_3, INK_4, BG, BG_2, CARD, LINE, LINE_2, GREEN, RED, AMBER,
