@@ -90,32 +90,6 @@ export function PlatformPage({ setPage }) {
                     </div>
                   ))}
                 </div>
-
-                {/* Pricing tiers */}
-                <div style={{
-                  marginTop: 28,
-                  display: "grid",
-                  gridTemplateColumns: p.paidPro ? "1fr 1fr 1fr" : "1fr 1fr",
-                  gap: 12,
-                }} className="pg">
-                  <div style={{
-                    background: CF.orangeTint, border: `1px solid ${CF.orange}40`,
-                    borderRadius: 6, padding: "16px 18px",
-                  }}>
-                    <p style={{ fontFamily: MONO, fontSize: 11, fontWeight: 600, color: CF.orange, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 8 }}>Free forever</p>
-                    <p style={{ ...smallStyle, fontSize: 13 }}>{p.free}</p>
-                  </div>
-                  <div style={{ ...cardStyle, padding: "16px 18px" }}>
-                    <p style={{ fontFamily: MONO, fontSize: 11, fontWeight: 600, color: CF.ink, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 8 }}>Standard</p>
-                    <p style={{ ...smallStyle, fontSize: 13 }}>{p.paid}</p>
-                  </div>
-                  {p.paidPro && (
-                    <div style={{ ...cardStyle, padding: "16px 18px" }}>
-                      <p style={{ fontFamily: MONO, fontSize: 11, fontWeight: 600, color: CF.ink, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 8 }}>Pro</p>
-                      <p style={{ ...smallStyle, fontSize: 13 }}>{p.paidPro}</p>
-                    </div>
-                  )}
-                </div>
               </div>
             </FDiv>
           </div>
